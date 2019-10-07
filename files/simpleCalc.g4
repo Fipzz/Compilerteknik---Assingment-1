@@ -9,6 +9,8 @@ expr	: e1=expr '+' e2=expr # Addition
 	| c=FLOAT     	      # Constant
 	| x=ID		      # Variable
 	| '(' e=expr ')'      # Parenthesis
+    | e1=expr '-' e2=expr # Subtraction
+    | e1=expr '/' e2=expr # Division
 	;
 	
 ID    : ALPHA (ALPHA|NUM)* ;

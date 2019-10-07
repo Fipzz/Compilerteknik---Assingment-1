@@ -73,5 +73,12 @@ class Interpreter extends AbstractParseTreeVisitor<Double> implements simpleCalc
 	return Double.parseDouble(ctx.c.getText()); 
     };
     
+    public Double visitSubtraction(simpleCalcParser.SubtractionContext ctx){
+	return visit(ctx.e1)-visit(ctx.e2);
+    };
+
+    public Double visitDivision(simpleCalcParser.DivisionContext ctx){
+	return visit(ctx.e1)/visit(ctx.e2);
+    };
 }
 
