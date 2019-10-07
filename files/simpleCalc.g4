@@ -2,7 +2,7 @@ grammar simpleCalc;
 
 /* A grammar for arithmetic expressions */
 
-start   : e=expr EOF ;
+start   : a=assign e=expr EOF ;
 
 expr	: e1=expr '+' e2=expr # Addition
 	| e1=expr '*' e2=expr # Multiplication
@@ -13,9 +13,13 @@ expr	: e1=expr '+' e2=expr # Addition
     | e1=expr '/' e2=expr # Division
 	;
 	
+assign  : v=VAR '=' e=expr ';' #assignment
+    ;
+
 ID    : ALPHA (ALPHA|NUM)* ;
 FLOAT : NUM+ ('.' NUM+)? ;
 
+VAR   : ALPHA (ALPHA | NUM)*;
 ALPHA : [a-zA-Z_ÆØÅæøå] ;
 NUM   : [0-9] ;
 
