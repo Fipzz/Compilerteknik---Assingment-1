@@ -51,6 +51,8 @@ class Interpreter extends AbstractParseTreeVisitor<Double> implements simpleCalc
     public HashMap<String, Double> env = new HashMap<String, Double>();
 
     public Double visitStart(simpleCalcParser.StartContext ctx){
+        for (simpleCalcParser.StatementContext s:ctx.s)
+            visit(s);
         return visit(ctx.e);
     };
 

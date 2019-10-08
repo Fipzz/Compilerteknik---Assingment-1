@@ -2,7 +2,7 @@ grammar simpleCalc;
 
 /* A grammar for arithmetic expressions */
 
-start   : (s+=statement) e=expr EOF ;
+start   : (s+=statement)* e=expr EOF ;
 
 expr	: '(' e=expr ')'      # Parenthesis
         | e1=expr op=BOP  e2=expr #Binary
