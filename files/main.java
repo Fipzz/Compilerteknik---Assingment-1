@@ -91,7 +91,36 @@ class Interpreter extends AbstractParseTreeVisitor<Double> implements simpleCalc
             case "==":
                 return visit(ctx.e1)==visit(ctx.e2);
                 break;
+            case "!=":
+                return visit(ctx.e1)!=visit(ctx.e2);
+                break;
         }
+    };
+
+    public Double visitBinary(simpleCalcParser.BinaryContext ctx){
+        int v1 = (visit(ctx.e1)).intValue();
+        int v2 = (visit(ctx.e2)).intValue();
+        switch (ctx.op.getText()){
+            case "<<":
+                return Double.valueOf(v1<<v2);
+                break;
+            case ">>":
+                return Double.valueOf(v1>>v2);
+                break;
+            case "&":
+                return Double.valueOf(v1&v2);
+                break;
+            case "|":
+                return Double.valueOf(v1|v2);
+                break;
+            case "^":
+                return Double.valueOf(v1^v2);
+                break;
+        }
+    };
+
+    public Double visitOnes(simpleCalcParser.OnesContext ctx){
+        return (Double)(~Integer.valueOf(visit(ctx.e)));
     };
 }
 

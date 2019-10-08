@@ -5,6 +5,8 @@ grammar simpleCalc;
 start   : a=assign e=expr EOF ;
 
 expr	: '(' e=expr ')'      # Parenthesis
+        | e1=expr op=BOP  e2=expr #Binary
+        | '~' e=expr                #Ones
         | e1=expr op=OPMD e2=expr # MulDiv
 	    | c=FLOAT     	      # Constant
 	    | x=ID	    	      # Variable
@@ -17,6 +19,9 @@ assign  : v=ID '=' e=expr ';' # Assignment
         ;
 
 bool    : e1=expr op=CMP e2=expr #Compare
+        | '!' e=expr #Not
+        | e1=expr '&&' e2=expr #And
+        | e1=expr '||' e2=expr #Or
         ;
 
 statement   : 'if' '(' b=bool ')' a=assign ('else' s=statement)? #If
@@ -24,9 +29,11 @@ statement   : 'if' '(' b=bool ')' a=assign ('else' s=statement)? #If
             | a=assign #ToAssign
             ;
 
+SFT   : '<<' | '>>' ;
+BOP   : SFT | [&|^~] ;
 OPPM  : [-+] ;
 OPMD  : [*/] ;
-CMP   : [<>] | '==' ;
+CMP   : [<>!] | '==' ;
 ID    : ALPHA (ALPHA|NUM)* ;
 FLOAT : NUM+ ('.' NUM+)? ;
 
