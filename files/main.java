@@ -55,30 +55,29 @@ class Interpreter extends AbstractParseTreeVisitor<Double> implements simpleCalc
     public Double visitParenthesis(simpleCalcParser.ParenthesisContext ctx){
 	return visit(ctx.e);
     };
-    
+
     public Double visitVariable(simpleCalcParser.VariableContext ctx){
-	System.err.println("Variables are not yet supported -- replacing by -1.0.\n");
-	return Double.valueOf(-1.0);
-    };
-    
-    public Double visitAddition(simpleCalcParser.AdditionContext ctx){
-	return visit(ctx.e1)+visit(ctx.e2);
+        System.err.println("Variables are not yet supported -- replacing by -1.0.\n");
+        return Double.valueOf(-1.0);
     };
 
-    public Double visitMultiplication(simpleCalcParser.MultiplicationContext ctx){
-	return visit(ctx.e1)*visit(ctx.e2);
+    public Double visitAddSub(simpleCalcParser.AddSubContext ctx){
+        if (ctx.op.getText().equals("-")) {
+            return visit(ctx.e1)-visit(ctx.e2);
+        } else {
+            return visit(ctx.e1)+visit(ctx.e2);
+        }
+    };
+
+    public Double visitMulDiv(simpleCalcParser.MulDivContext ctx){
+        if (ctx.op.getText().equals("/"))
+            return visit(ctx.e1)/visit(ctx.e2);
+        else
+            return visit(ctx.e1)*visit(ctx.e2);
     };
 
     public Double visitConstant(simpleCalcParser.ConstantContext ctx){
-	return Double.parseDouble(ctx.c.getText()); 
-    };
-    
-    public Double visitSubtraction(simpleCalcParser.SubtractionContext ctx){
-	return visit(ctx.e1)-visit(ctx.e2);
-    };
-
-    public Double visitDivision(simpleCalcParser.DivisionContext ctx){
-	return visit(ctx.e1)/visit(ctx.e2);
+        return Double.parseDouble(ctx.c.getText());
     };
 }
 
