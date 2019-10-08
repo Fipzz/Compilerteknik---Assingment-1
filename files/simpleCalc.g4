@@ -14,18 +14,19 @@ expr	: '(' e=expr ')'      # Parenthesis
     	;
 
 assign  : v=ID '=' e=expr ';' # Assignment
-        | v1=assign v2=assign # SplitAssignment
-        | '{' v=assign '}' # AssignSequence
+        | a1=assign a2=assign # SplitAssignment
+        | '{' a=assign '}' # AssignSequence
         ;
 
 bool    : e1=expr op=CMP e2=expr #Compare
-        | '!' e=expr #Not
-        | e1=expr '&&' e2=expr #And
-        | e1=expr '||' e2=expr #Or
+        | '!' b=bool #Not
+        | b1=bool '&&' b2=bool #And
+        | b1=bool '||' b2=bool #Or
         ;
 
 statement   : 'if' '(' b=bool ')' a=assign ('else' s=statement)? #If
             | 'while' '(' b=bool ')' a=assign #While
+            | s1=statement s2=statement # SplitStatement
             | a=assign #ToAssign
             ;
 

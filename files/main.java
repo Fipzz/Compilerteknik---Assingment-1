@@ -139,5 +139,46 @@ class Interpreter extends AbstractParseTreeVisitor<Double> implements simpleCalc
         else if (ctx.s != null)
             visit(ctx.s);
     };
+
+    public Double visitNot(simpleCalcParser.NotContext ctx){
+        if (visit(ctx.b) == 0.0)
+            return 1.0;
+        else
+            return 0.0;
+    };
+
+    public Double visitAnd(simpleCalcParser.AndContext ctx){
+        if (visit(ctx.b1) == 1.0 && visit(ctx.b2) == 1.0)
+            return 1.0;
+        else
+            return 0.0;
+    };
+
+    public Double visitOr(simpleCalcParser.OrContext ctx){
+        if (visit(ctx.b1) == 1.0 || visit(ctx.b2) == 1.0)
+            return 1.0;
+        else
+            return 0.0;
+    };
+
+    public Double visitSplitAssignment(simpleCalcParser.SplitAssignmentContext ctx){
+        visit(ctx.a1);
+        visit(ctx.a2);
+    };
+
+    public Double visitSplitStatement(simpleCalcParser.SplitStatementContext ctx){
+        visit(ctx.s1);
+        visit(ctx.s2);
+    };
+
+    public Double visitAssignSequence(simpleCalcParser.AssignSequenceContext ctx){
+        visit(ctx.a);
+    };
+
+    public Double visitAssignment(simpleCalcParser.AssignmentContext ctx){
+        String varname = ctx.v.getText();
+        double val = visit(ctx.e);
+    };
+}
 }
 
