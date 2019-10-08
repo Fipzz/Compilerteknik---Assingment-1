@@ -79,5 +79,19 @@ class Interpreter extends AbstractParseTreeVisitor<Double> implements simpleCalc
     public Double visitConstant(simpleCalcParser.ConstantContext ctx){
         return Double.parseDouble(ctx.c.getText());
     };
+
+    public Boolean visitCompare(simpleCalcParser.CompareContext ctx){
+        switch (ctx.op.getText()){
+            case "<":
+                return visit(ctx.e1)<visit(ctx.e2);
+                break;
+            case ">":
+                return visit(ctx.e1)>visit(ctx.e2);
+                break;
+            case "==":
+                return visit(ctx.e1)==visit(ctx.e2);
+                break;
+        }
+    };
 }
 
