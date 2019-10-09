@@ -28,8 +28,8 @@ statement   : 'if' '(' b=bool ')' a=assign ('else' s=statement)? #If
             | a=assign #ToAssign
             ;
 
-SFT   : '<<' | '>>' ;
 BOP   : SFT | [&|^~] ;
+SFT   : '<<' | '>>' ;
 OPPM  : [-+] ;
 OPMD  : [*/] ;
 CMP   : [<>!] | '==' ;
