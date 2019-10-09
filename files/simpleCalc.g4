@@ -2,7 +2,7 @@ grammar simpleCalc;
 
 /* A grammar for arithmetic expressions */
 
-start   : a=assign e=expr EOF ;
+start   : (s+=statement)* e=expr EOF ;
 
 expr	: '(' e=expr ')'      # Parenthesis
         | e1=expr op=BOP  e2=expr #Binary
@@ -13,9 +13,9 @@ expr	: '(' e=expr ')'      # Parenthesis
         | e1=expr op=OPPM e2=expr # AddSub
     	;
 
-assign  : v=ID '=' e=expr ';' # Assignment
-        | a1=assign a2=assign # SplitAssignment
-        | '{' a=assign '}' # AssignSequence
+assign  : '{' a=assign '}' # AssignSequence
+        | a1=assign a2=assign # AssignSplit
+        | v=ID '=' e=expr ';' # Assignment
         ;
 
 bool    : e1=expr op=CMP e2=expr #Compare
@@ -26,15 +26,14 @@ bool    : e1=expr op=CMP e2=expr #Compare
 
 statement   : 'if' '(' b=bool ')' a=assign ('else' s=statement)? #If
             | 'while' '(' b=bool ')' a=assign #While
-            | s1=statement s2=statement # SplitStatement
             | a=assign #ToAssign
             ;
 
-SFT   : '<<' | '>>' ;
 BOP   : SFT | [&|^~] ;
+SFT   : '<<' | '>>' ;
 OPPM  : [-+] ;
 OPMD  : [*/] ;
-CMP   : [<>!] | '==' ;
+CMP   : [<>!] | '==' | '!=' ;
 ID    : ALPHA (ALPHA|NUM)* ;
 FLOAT : NUM+ ('.' NUM+)? ;
 
