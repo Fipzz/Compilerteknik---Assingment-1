@@ -32,7 +32,7 @@ BOP   : SFT | [&|^~] ;
 SFT   : '<<' | '>>' ;
 OPPM  : [-+] ;
 OPMD  : [*/] ;
-CMP   : [<>!] | '==' ;
+CMP   : [<>!] | '==' | '!=' ;
 ID    : ALPHA (ALPHA|NUM)* ;
 FLOAT : NUM+ ('.' NUM+)? ;
 
