@@ -90,7 +90,11 @@ class Interpreter extends AbstractParseTreeVisitor<Double> implements simpleCalc
             case ">":
                 return visit(ctx.e1)>visit(ctx.e2) ? 1.0 : 0.0;
             case "==":
-                return visit(ctx.e1)==visit(ctx.e2) ? 1.0 : 0.0;
+                double diff = visit(ctx.e1)-visit(ctx.e1);
+                double my = 0.00000000000000001;
+                if (diff < my && diff > -my)
+                    return 1.0;
+                return 0.0;
             case "!=":
                 return visit(ctx.e1)!=visit(ctx.e2) ? 1.0 : 0.0;
             default:
@@ -134,9 +138,9 @@ class Interpreter extends AbstractParseTreeVisitor<Double> implements simpleCalc
     public Double visitIf(simpleCalcParser.IfContext ctx){
         if (visit(ctx.b) == 1.0)
             return visit(ctx.a);
-        else if (ctx.s != null)
+        /* else if (ctx.s != null) */
             return visit(ctx.s);
-        return 0.0;
+        /* return 0.0; */
     };
 
     public Double visitNot(simpleCalcParser.NotContext ctx){
@@ -169,5 +173,11 @@ class Interpreter extends AbstractParseTreeVisitor<Double> implements simpleCalc
         double val = visit(ctx.e);
         env.put(varname, val);
         return val;
+    };
+
+    public Double visitAssignSplit(simpleCalcParser.AssignSplitContext ctx){
+        visit(ctx.a1);
+        visit(ctx.a2);
+        return 1.0;
     };
 }

@@ -13,8 +13,9 @@ expr	: '(' e=expr ')'      # Parenthesis
         | e1=expr op=OPPM e2=expr # AddSub
     	;
 
-assign  : v=ID '=' e=expr ';' # Assignment
-        | '{' a=assign '}' # AssignSequence
+assign  : '{' a=assign '}' # AssignSequence
+        | a1=assign a2=assign # AssignSplit
+        | v=ID '=' e=expr ';' # Assignment
         ;
 
 bool    : e1=expr op=CMP e2=expr #Compare

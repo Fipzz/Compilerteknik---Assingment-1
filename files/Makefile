@@ -25,6 +25,18 @@ test2:	main.class
 test3:	main.class
 	java main CompilerTeknikTest2.txt
 
+testif:	main.class
+	java main IfTest.txt
+
+testelif:	main.class
+	java main ElseIfTest.txt
+
+testel:	main.class
+	java main ElseTest.txt
+
+testwhile:	main.class
+	java main WhileTest.txt
+
 tree:	$(GENERATED) simpleCalc.g4
 	javac $(GENERATED)
 	$(grun) simpleCalc start -tree -gui < simpleCalc_input.txt
